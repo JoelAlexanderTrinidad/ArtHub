@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script defer src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://kit.fontawesome.com/131d9c1f34.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <link rel="stylesheet" href="./assets/styles/index.css">
+    <link rel="stylesheet" href="./assets/styles/carrito.css">
+    <link rel="shortcut icon" href="./assets/images/logonegro.png" type="image/x-icon">
+    <script defer src="./assets/scripts/carrito.js"></script>
+    <title>Shop | Carrito</title>
+</head>
+<body id="app" style="background-color: black;">
+    <div class="bg-animation">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        <div id="stars4"></div>
+    </div>
+    <div class="contenedor-overflow">
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark">
+                <div class="container navegacion">
+                    <img src="./assets/images/logo.png" alt="Logo" class="logo">
+                    <a class="navbar-brand" href="./index.html">ARTHUB</a>
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavId">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="./cuenta.html" v-if="loginAux" v-cloak>Mi cuenta</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./productos.html">Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./artistas.html" v-cloak>Artistas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#" v-if="loginAux" v-cloak>Carrito</a>
+                            </li>
+                            <li class="nav-item link-bordeado"  @click="logOut()" v-cloak>
+                                <a class="nav-link" href="">Logout</a>
+                            </li>                       
+                        </ul>
+                    </div>
+                </div>
+            </nav>         
+        </header>
+        <main>
+            <div class="position-absolute d-flex justify-content-center align-items-center" :class="{ 'cartelPago' : pagoExitoso }">
+                <p class="mb-0">El pago se realizó con éxito</p>
+            </div>
+            <div class="contenedor-modalCarrito ocultar-modal" id="modalCarrito">
+                <div class="contenedor-modal" id="compraDatos">
+                    <div class="boton-cerrar" >
+                        <p @click="cerrarModal()" class="equis-boton">X</p>
+                    </div>
+                    <div class="contenedor-modal-tarjeta-datosPersonales">
+                        <div class="contenedor-datos">
+                            <div class="titulo-editardatos-contenedor">
+                                <p class="titulo-modal">MIS DATOS</p>
+                                <img v-cloak class="icono-editar" src="./assets/images/pen.png" alt="Editar" @click="activarFormulario()" id="iconoEditar">
+                            </div>
+                            <div class="contenedor-datos-personales">
+                                <div>
+                                    <p>Nombre</p>
+                                    <input type="text" v-model="nombre" readonly>
+                                    <p>Direccion</p>
+                                    <input type="text" v-model="direccion" readonly>
+                                    <p>Pais</p>
+                                    <input type="text" v-model="pais" readonly>
+                                </div>
+                                <div>
+                                    <p>Apellido</p>
+                                    <input type="text" v-model="nombre" readonly>
+                                    <p>Codigo Postal</p>
+                                    <input type="text" v-model="codigoPostal" readonly>
+                                    <p>Ciudad</p>
+                                    <input type="text" v-model="ciudad" readonly>
+                                </div>
+                            </div>
+                            <p>Descripcion direccion</p>
+                            <input type="text" class="input-extra" v-model="descripcionExtra" readonly>
+                            <div class="boton-contenedor input-extra ocultar-modal" id="actualizarDatosBoton" @click="actualizar()">
+                                <p>Actualizar datos</p>
+                            </div>
+                        </div>
+                        <div class="datos-tarjeta-contenedor">
+                            <div class="titulo-editardatos-contenedor">
+                                <p class="titulo-modal">DATOS DE PAGO</p>
+                            </div>
+                            <div class="tarjeta-datos">
+                                <p>Numero de tarjeta</p>
+                                <input type="text" v-model="numeroTarjeta">
+                                <p>Codigo de seguridad</p>
+                                <input type="number" v-model="cvvTarjeta">
+                                <p>Nombre tarjeta</p>
+                                <input type="text" v-model="nombreTarjeta">
+                                <p>Fecha de expiracion</p>
+                                <input type="text" v-model="expiracionTarjeta" >
+                            </div>
+                            <div v-if="error" class="error-texto">{{error}}</div>
+                            <div @click="pagar" class="boton-contenedor input-extra">
+                                <p>Pagar</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <img class="carrito-blanca" src="./assets/images/carrito-blanco.png">
+            <img class="carrito-color" src="./assets/images/carrito-color.png">
+            <div class="contenedor-carrito">
+                <h2 class="titulo-seccion">Carrito</h2>
+                <div class="contenedor-compra">
+                    <div class="contenedor-productos">
+                        <!-- <img v-for="producto of listaCarrito" :src="productoURL(producto.productoId)" alt=""> -->
+                        <!-- <div v-for="producto of listaCarrito">
+                            {{productoURL(producto.productoId)}}
+                            
+                        </div> -->
+                        <template v-if="listaCarrito.length" >
+                            <div class="producto" v-for="producto of listaCarrito">
+                                <template v-for="productoGenerico of listaProductosGenericos.filter(prod=> prod.id==producto.productoId)">
+                                    <div class="producto-wrap">
+                                        <div class="producto-imagen">
+                                            <img class="producto-imagen_plantilla" :src="productoURL(producto.productoId)">
+                                            <img class="producto-imagen_estampa" :src="ilustracionURL(producto.ilustracionId)">
+                                        </div>
+                                        <div class="producto-detalles">
+                                            <p class="producto-detalles_titulo">{{`${productoGenerico.tipoProducto} sublimada`}}</p>
+                                            <div>
+                                                <template v-if="productoGenerico.tipoProducto=='REMERA'">
+                                                    <p>TALLA: <span>{{productoGenerico.talla}}</span></p>
+                                                </template>
+                                                <template v-else-if="productoGenerico.tipoProducto=='LIBRETA'">
+                                                    <p>TAMAÑO: <span>{{productoGenerico.tamaño}}</span></p>
+                                                </template>
+                                                <p>CANTIDAD: <span>{{producto.cantidad}}</span></p>
+                                                <p>PRECIO C/U: <span>${{formatCurrency(productoGenerico.precio)}}</span></p>
+                                                <p>DESCRIPCION: <span>{{productoGenerico.descripcion}}</span></p>
+                                            </div>
+                                        </div>
+                                    </div>     
+                                    <div class="producto-wrap">
+                                        <div class="producto-cantidad">
+                                            <div class="agregar-quitar-productos">
+                                                <template v-if="producto.cantidad==1">
+                                                    <button @click="restarAlCarrito(producto)" class="cambiar-cantidad"><i class="fa-solid fa-trash"></i></button>
+                                                </template>
+                                                <template v-else>
+                                                    <button @click="restarAlCarrito(producto)" class="cambiar-cantidad">-</button>
+                                                </template>
+                                                <p class="mostrar-cantidad">{{producto.cantidad}}</p>
+                                                <button @click="agregarAlCarrito(producto)" class="cambiar-cantidad">+</button>
+                                            </div>
+                                            <p>{{productoGenerico.stock}} disponibles</p>
+                                        </div>
+                                        <div class="producto-eliminar">
+                                            <i @click="eliminarProducto(producto)" class="fa-regular fa-trash-can fa-2xl"></i>
+                                            <p>Eliminar</p>
+                                        </div>
+                                        <div class="producto-monto">
+                                            <p>${{formatCurrency(productoGenerico.precio*producto.cantidad)}}</p>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <h2>No posee productos en el carrito</h2>
+                        </template>
+                    </div>
+                    <div class="total-compra">
+                        <p>Total: <span>${{calcularTotal()}}</span></p>
+                    </div>
+                </div>
+                <button class="boton-checkout" data-bs-toggle="modal" data-bs-target="#checkout" @click="cerrarModal()">Checkout</button>
+            </div>
+            
+        </main>
+        <footer>
+            <p class="titulo-footer">Proyecto final MindHub - Cohort 41</p>
+            <p class="texto-footer">Oscar Schwerdt - Joel Trinidad - Cameron Velasquez - Alejo Lozano - Emilia Sosa</p>
+        </footer>
+    </div>
+</body>
+</html>

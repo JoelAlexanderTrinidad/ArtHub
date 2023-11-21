@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script defer src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://kit.fontawesome.com/131d9c1f34.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <link rel="stylesheet" href="./assets/styles/index.css">
+    <link rel="stylesheet" href="./assets/styles/artistas.css">
+    <link rel="stylesheet" href="./assets/styles/productos.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="shortcut icon" href="./assets/images/logonegro.png" type="image/x-icon">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script defer src="./assets/scripts/productos.js"></script>
+    <title>Shop | Productos</title>
+</head>
+<body id="app" style="background-color: black;">
+  <div class="bg-animation">
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
+      <div id="stars4"></div>
+  </div>
+      <div class="contenedor-overflow">
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark">
+                <div class="container navegacion">
+                  <img src="./assets/images/logo.png" alt="Logo" class="logo">
+                    <a class="navbar-brand" href="./index.html">ARTHUB</a>
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavId">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="./cuenta.html" v-if="loginAux" v-cloak>Mi cuenta</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./artistas.html">Artistas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./carrito.html" v-if="loginAux" v-cloak>Carrito</a>
+                            </li>
+                            <li class="nav-item link-bordeado" @click="cerrarModal()" v-if="!loginAux" v-cloak>
+                              <a class="nav-link">Login</a>
+                            </li>
+                            <li class="nav-item link-bordeado" v-if="loginAux"  @click="logOut()" v-cloak>
+                                <a class="nav-link" href="">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            
+        </header>
+        <main>
+          <div class="contenedor-inicioSesionRegistro ocultar-modal" id="inicioSesionRegistro">
+            <div class="contenedor-inicioSesion ocultar-modal texto-mensaje" id="mensaje"></div>
+            <div class="contenedor-inicioSesion" id="inicioSesion">
+                <div class="boton-cerrar" >
+                    <p @click="cerrarModal()" class="equis-boton">X</p>
+                </div>
+                <p class="titulo-registroInicio">Inicia sesion</p>
+                <form>
+                    <label>Usuario</label>
+                    <input type="text" v-model="emailONick">
+                    <label>Contraseña</label>
+                    <input type="password" v-model="contraseña">
+                </form>
+                <p class="error-texto" v-cloak>{{error}}</p>
+                <div class="boton-contenedor" @click="logIn()">
+                    <p>Iniciar sesion</p>
+                </div>
+                <div class="contenedor-texto-extra-inicioSesion">
+                    <p>No tienes cuenta?</p>
+                    <p @click="mostrarRegistro()" class="texto-extra-color">Registrate</p>
+                </div>
+                
+            </div>
+            <div class="contenedor-Registro ocultar-modal" id="registro">
+                <div class="boton-cerrar" >
+                    <p></p>
+                    <p @click="cerrarModal()" class="equis-boton">X</p>
+                </div>
+                <p class="titulo-registroInicio">Registrate</p>
+                <form class="contenedor-registro-formulario">
+                    <div>
+                        <label>Nombre</label>
+                        <input type="text" v-model="nombre">
+                        <label>Nick</label>
+                        <input type="text" v-model="nick">
+                        <label>Ciudad</label>
+                        <input type="text" v-model="ciudad">
+                        <label>Pais</label>
+                        <input type="text" v-model="pais">
+                        <label>Email</label>
+                        <input type="text" v-model="email">
+                    </div>
+                    <div>
+                        <label>Apellido</label>
+                        <input type="text" v-model="apellido">
+                        <label>Direccion</label>
+                        <input type="text" v-model="direccion">
+                        <label>Codigo Postal</label>
+                        <input type="text" v-model="codigoPostal">
+                        <label>Descripcion direccion</label>
+                        <input type="text" v-model="descripcionExtra">
+                        <label>Contraseña</label>
+                        <input type="password" v-model="contraseñaRegistro">
+                    </div>
+                </form>
+                <p class="error-texto" v-cloak>{{error}}</p>
+                <div class="boton-contenedor" @click="registro()">
+                    <p>Registrate</p>
+                </div>
+                <div class="contenedor-texto-extra-inicioSesion">
+                    <p @click="mostrarRegistro()" class="texto-extra-color">Inicia sesion</p>
+                </div>
+            </div>
+        </div>
+          <img class="productos-blanca" src="./assets/images/productos-blanca.png">
+          <img class="productos-color" src="./assets/images/productos-color.png">
+            <div class="main_artistas position-relative">
+                <h2 class="titulo-seccion">Productos</h2>
+                <div class="d-flex flex-wrap justify-content-evenly mt-4 pt-4 card-deck " id="card-deck-productos">
+                  <div class="d-flex justify-content-center flex-wrap gap-1 ">
+                    <div class="filtro-contenedor">
+                      <input type="text" v-model="nombreIlustrador" @keyup="filtroNombreIlustrador()" class="ilustradorNombre-input" placeholder="Busca a tu ilustrador favorito">
+                      <img src="./assets/images/search.png" alt="" class="lupa-imagen">
+                    </div>
+                    <div class="">
+                      <select v-model="tipoDeProducto" v-cloak class="ilustradorNombre-input-select" >
+                        <option value="false">Selecciona un producto..</option>
+                        <option v-for="producto of productos"  :value="producto">{{producto}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- artistas filtrados -->
+                  <div v-cloak v-if="nombreIlustrador != ''" class="container" id="contenedor_artistas">
+                    <div class="card-deck  row justify-content-evenly" >
+                      <div data-aos="fade-up" data-aos-duration="800" class="col-xs-12 col-sm-6 col-md-4 cards-container_artistas" v-for="ilustrador of ilustradoresFiltrados">
+                        <div class="card card-productos-ilustrador">
+                          <div class="view overlay">
+                            <div class="card-img-top">
+                              <img class="card-img-top" :src="ilustrador.avatarURL" :alt="ilustrador.nick" :title="ilustrador.nick">
+                            </div>
+                            <a href="#!">
+                              <div class="mask rgba-white-slight"></div>
+                            </a>
+                          </div>
+                          <div class="card-body justify-content-between">
+                            <h4 class="card-title title_productos">{{ilustrador.nick}}</h4>
+                            <button type="button" class="btn btn-light-blue btn-md" @click="verPerfil(ilustrador.nick)">VER PERFIL</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- fin artistas filtrados -->
+
+                  <template v-else-if="tipoDeProducto == 'Remera'" v-cloak v-for="(producto, index) of productosAleatorios">
+                    <div v-if="producto.includes('REMERA')"  class="col-xs-12 col-sm-6 col-md-4 cards-container_artistas" >
+                      <div class="card card-productos">                      
+                        <div class="view overlay" >
+                            
+                            <div v-show="producto.includes('REMERA') && producto.includes('BLANCO')">
+                              <img class="card-img-top" src="../web/assets/images/productos/remera_blanca.png" alt="Card image cap">
+                            </div>
+                            <div v-show="producto.includes('REMERA') && producto.includes('AMARILLO')">
+                              <img class="card-img-top" src="../web/assets/images/productos/remera_amarilla.png" alt="Card image cap">
+                            </div>
+                            <div v-show="producto.includes('REMERA') && producto.includes('AZUL')">
+                              <img class="card-img-top" src="../web/assets/images/productos/remera_azul.png" alt="Card image cap">
+                            </div>
+                            <div v-show="producto.includes('REMERA') && producto.includes('VERDE')">
+                              <img class="card-img-top" src="../web/assets/images/productos/remera_verde.png" alt="Card image cap">
+                            </div>
+                            <div v-show="producto.includes('REMERA') && producto.includes('ROSA')">
+                              <img class="card-img-top" src="../web/assets/images/productos/remera_rosa.png" alt="Card image cap">
+                            </div>
+                            <div v-show="producto.includes('REMERA') && producto.includes('ROJO')">
+                              <img class="card-img-top" src="../web/assets/images/productos/remera_roja.png" alt="Card image cap">
+                            </div>
+                           
+                          <img class="estampado-remera" :src="ilustracionesAleatorias[index].imgURL">
+                        </div>
+                        <div class="card-body justify-content-between">
+                          
+                          <p class="mb-0 card-title title-productos fs-4">{{ilustracionesAleatorias[index].nombre}}</p>
+                          <p class="mb-0 card-title fs-6">{{producto.split(',')[0]}}</p>
+                          <p class="mb-0 card-title fs-6">TALLE: {{producto.split(',')[1]}}</p>
+                          <p class="mb-0 card-title fs-6">COLOR: {{producto.split(',')[2]}}</p>
+                          <!-- El boton debe decir agregar al carrito (se unificara con el carrito luego) -->
+                          <button type="button" class="btn btn-light-blue btn-md">AGREGAR AL CARRITO</button>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+
+                  <template v-else-if="tipoDeProducto == 'Taza'" v-cloak v-for="(producto, index) of productosAleatorios">
+                    <div v-if="producto.includes('TAZA')"  class="col-xs-12 col-sm-6 col-md-4 cards-container_artistas" >
+                      <div class="card card-productos">                      
+                        <div class="view overlay" >
+                          <div v-show="producto.includes('TAZA')">
+                            <img class="card-img-top mascara-taza" src="../web/assets/images/productos/taza_2.png" alt="Card image cap">
+                          </div>
+                          <img class="estampado-remera" :src="ilustracionesAleatorias[index].imgURL">
+                        </div>
+                        <div class="card-body justify-content-between">
+                          <p class="mb-0 card-title title-productos fs-4">{{ilustracionesAleatorias[index].nombre}}</p>
+                          <p class="mb-0 card-title fs-6">{{producto.split(',')[0]}}</p>
+                          <p class="mb-0 card-title fs-6">COLOR: {{producto.split(',')[1]}}</p>
+                          <button type="button" class="btn btn-light-blue btn-md">AGREGAR AL CARRITO</button>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+
+                  <template v-else-if="tipoDeProducto == 'Cuaderno'" v-cloak v-for="(producto, index) of productosAleatorios">
+                    <div v-if="producto.includes('LIBRETA')"  class="col-xs-12 col-sm-6 col-md-4 cards-container_artistas" >
+                      <div class="card card-productos">                      
+                        <div class="view overlay" >
+                          <div v-show="producto.includes('LIBRETA')">
+                            <img class="card-img-top" src="../web/assets/images/productos/cuaderno.png" alt="Card image cap">
+                          </div>
+                            <img class="estampado-remera" :src="ilustracionesAleatorias[index].imgURL">
+                        </div>
+                        <div class="card-body justify-content-between">
+                          
+                          <p class="mb-0 card-title title-productos fs-4">{{ilustracionesAleatorias[index].nombre}}</p>
+                          <p class="mb-0 card-title fs-6">{{producto.split(',')[0]}}</p>
+                          <p class="mb-0 card-title fs-6">TAMAÑO: {{producto.split(',')[1]}}</p>
+                          <button type="button" class="btn btn-light-blue btn-md">AGREGAR AL CARRITO</button>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+
+                  <template v-else-if="tipoDeProducto == 'Llavero'" v-cloak v-for="(producto, index) of productosAleatorios">
+                    <div v-if="producto.includes('LLAVERO')"  class="col-xs-12 col-sm-6 col-md-4 cards-container_artistas" >
+                      <div class="card card-productos">                      
+                        <div class="view overlay" >
+                          <div v-show="producto.includes('LLAVERO')">
+                            <img class="card-img-top" src="../web/assets/images/productos/llavero-plastico-cuadrado.png" alt="Card image cap">
+                          </div>
+                            <img class="estampado-remera" :src="ilustracionesAleatorias[index].imgURL">
+                        </div>
+                        <div class="card-body justify-content-between">
+                          
+                          <p class="mb-0 card-title title-productos fs-4">{{ilustracionesAleatorias[index].nombre}}</p>
+                          <p class="mb-0 card-title fs-6">{{producto.split(',')[0]}}</p>
+                          <p class="mb-0 card-title fs-6">TIPO: {{producto.split(',')[1]}}</p>
+                          <button type="button" class="btn btn-light-blue btn-md">AGREGAR AL CARRITO</button>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+
+                  <template v-else-if="tipoDeProducto == 'Poster'" v-cloak v-for="(producto, index) of productosAleatorios">
+                    <div v-if="producto.includes('PRINT')"  class="col-xs-12 col-sm-6 col-md-4 cards-container_artistas" >
+                      <div class="card card-productos">                      
+                        <div class="view overlay" >
+                          <div v-show="producto.includes('PRINT')">
+                            <img class="card-img-top" src="../web/assets/images/productos/Poster-Mockup.png" alt="Card image cap">
+                          </div>
+                            <img class="estampado-remera" :src="ilustracionesAleatorias[index].imgURL">
+                        </div>
+                        <div class="card-body justify-content-between">
+                          
+                          <p class="mb-0 card-title title-productos fs-4">{{ilustracionesAleatorias[index].nombre}}</p>
+                          <p class="mb-0 card-title fs-6">{{producto.split(',')[0]}}</p>
+                          <p class="mb-0 card-title fs-6">TAMAÑO: {{producto.split(',')[1]}}</p>
+                          <button type="button" class="btn btn-light-blue btn-md">AGREGAR AL CARRITO</button>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+
+
+                    
+                  <template v-else v-cloak v-for="(producto, index) of productosAleatorios" class="">
+
+                  <div class="col-xs-12 col-sm-6 col-md-4 cards-container_artistas " >
+                    <div class="card card-productos ">                      
+                      <div class="view overlay ">
+                        
+                          
+                          <div v-show="producto.includes('REMERA') && producto.includes('BLANCO')">
+                            <img class="card-img-top" src="../web/assets/images/productos/remera_blanca.png" alt="Card image cap">
+                          </div>
+                          <div v-show="producto.includes('REMERA') && producto.includes('AMARILLO')">
+                            <img class="card-img-top" src="../web/assets/images/productos/remera_amarilla.png" alt="Card image cap">
+                          </div>
+                          <div v-show="producto.includes('REMERA') && producto.includes('AZUL')">
+                            <img class="card-img-top" src="../web/assets/images/productos/remera_azul.png" alt="Card image cap">
+                          </div>
+                          <div v-show="producto.includes('REMERA') && producto.includes('VERDE')">
+                            <img class="card-img-top" src="../web/assets/images/productos/remera_verde.png" alt="Card image cap">
+                          </div>
+                          <div v-show="producto.includes('REMERA') && producto.includes('ROSA')">
+                            <img class="card-img-top" src="../web/assets/images/productos/remera_rosa.png" alt="Card image cap">
+                          </div>
+                          <div v-show="producto.includes('REMERA') && producto.includes('ROJO')">
+                            <img class="card-img-top" src="../web/assets/images/productos/remera_roja.png" alt="Card image cap">
+                          </div>
+                          <div v-show="producto.includes('LIBRETA')">
+                            <img class="card-img-top" src="../web/assets/images/productos/cuaderno.png" alt="Card image cap">
+                          </div>
+                          <div v-show="producto.includes('PRINT')">
+                            <img class="card-img-top" src="../web/assets/images/productos/Poster-Mockup.png" alt="Card image cap">
+                          </div>
+                          <div v-show="producto.includes('TAZA')">
+                            <img class="card-img-top mascara-taza" src="../web/assets/images/productos/taza_2.png" alt="Card image cap">
+                          </div>
+                          <div v-show="producto.includes('LLAVERO')">
+                            <img class="card-img-top" src="../web/assets/images/productos/llavero-plastico-cuadrado.png" alt="Card image cap">
+                          </div>
+                       
+                          <img class="estampado-remera" :src="ilustracionesAleatorias[index].imgURL">
+                      </div>
+                      <div class="card-body justify-content-between">
+                        
+                        
+                        <template v-if="producto.includes('REMERA')">
+                          <p class="mb-0 card-title title-productos fs-4">{{ilustracionesAleatorias[index].nombre}}</p>
+                          <p class="mb-0 card-title fs-6">{{producto.split(',')[0]}}</p>
+                          <p class="mb-0 card-title fs-6">TALLE: {{producto.split(',')[1]}}</p>
+                          <p class="mb-0 card-title fs-6">COLOR: {{producto.split(',')[2]}}</p>
+                        </template>
+
+                        <template v-if="producto.includes('LIBRETA') || producto.includes('PRINT')">
+                          <p class="mb-0 card-title title-productos fs-4">{{ilustracionesAleatorias[index].nombre}}</p>
+                          <p class="mb-0 card-title fs-6">{{producto.split(',')[0]}}</p>
+                          <p class="mb-0 card-title fs-6">TAMAÑO: {{producto.split(',')[1]}}</p>
+                        </template>
+
+                        <template v-if="producto.includes('LLAVERO')">
+                          <p class="mb-0 card-title title-productos fs-4">{{ilustracionesAleatorias[index].nombre}}</p>
+                          <p class="mb-0 card-title fs-6">{{producto.split(',')[0]}}</p>
+                          <p class="mb-0 card-title fs-6">TIPO: {{producto.split(',')[1]}}</p>
+                        </template>
+
+                        <template v-if="producto.includes('TAZA')">
+                          <p class="mb-0 card-title title-productos fs-4">{{ilustracionesAleatorias[index].nombre}}</p>
+                          <p class="mb-0 card-title fs-6">{{producto.split(',')[0]}}</p>
+                          <p class="mb-0 card-title fs-6">COLOR: {{producto.split(',')[1]}}</p>
+                        </template>
+                          
+                        <button type="button" class="btn btn-light-blue btn-md">AGREGAR AL CARRITO</button>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+
+                   
+                </div>
+            </div>
+        </main>
+        <footer>
+          <p class="titulo-footer">Proyecto final MindHub - Cohort 41</p>
+          <p class="texto-footer">Oscar Schwerdt - Joel Trinidad - Cameron Velasquez - Alejo Lozano - Emilia Sosa</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script defer src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://kit.fontawesome.com/131d9c1f34.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <link rel="stylesheet" href="./assets/styles/admin.css">
+    <link rel="shortcut icon" href="./assets/images/logonegro.png" type="image/x-icon">
+    <script defer src="./assets/scripts/admin.js"></script>
+    <title>Shop | Admin</title>
+</head>
+<body id="app" style="background-color: black;">
+    <div class="bg-animation">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        <div id="stars4"></div>
+    </div>
+    <div class="contenedor-overflow">
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark">
+                <div class="container navegacion">
+                    <img src="./assets/images/logo.png" alt="Logo" class="logo">
+                    <a class="navbar-brand" href="./index.html">ARTHUB</a>
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavId">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="./cuenta.html" v-if="loginAux" v-cloak>Mi cuenta</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./productos.html">Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./artistas.html">Artistas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./carrito.html" v-if="loginAux" v-cloak>Carrito</a>
+                            </li>
+                            <li class="nav-item link-bordeado" @click="cerrarModal()" v-if="!loginAux" v-cloak>
+                                <a class="nav-link">Login</a>
+                            </li>
+                            <li class="nav-item link-bordeado" v-if="loginAux"  @click="logOut()" v-cloak>
+                                <a class="nav-link" href="">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>         
+        </header>
+        <main>
+            <div class="contenedor-inicioSesionRegistro ocultar" id="inicioSesionRegistro">
+                <div class="contenedor-inicioSesion error-texto" id="mensaje"></div>
+            </div>
+            <div class="submenu-contenedor">
+                <div class="botones-contenedor" @click="mostrarModal('productos','ilustradores', 'productoBoton', 'ilustradorBoton')" id="productoBoton"><p>Productos</p></div>
+                <div class="botones-contenedor boton-desactivado" @click="mostrarModal('ilustradores','productos','ilustradorBoton', 'productoBoton')" id="ilustradorBoton"><p>Ilustradores</p></div>
+            </div>
+            <div class="contenedor-informacion">
+                <div class="d-flex justify-content-center">
+                    <div id="productos">
+                        <div class="contenedor-tabla">
+                            <table id="tabla-productos">
+                                <thead>
+                                    <tr>
+                                        <th>Producto </th>
+                                        <th>Medida</th>
+                                        <th>Color</th>
+                                        <th>Stock</th>
+                                        <th>Descripcion</th>
+                                        <th>Precio</th>
+                                        <th>Modificar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="nombre of nombres">
+                                        <td>{{nombre}}</td>
+                                        <td>
+                                            <select  v-if="nombre == 'REMERA'" @change="actualizarInformacion(nombre)" v-model="productoTalla">
+                                                <option v-for="talla of tallas" :value="talla">{{talla}}</option>
+                                            </select>
+                                            <select  v-if="nombre =='LIBRETA'" @change="actualizarInformacion(nombre)"  v-model="productoMedidaLibreta">
+                                                <option v-for="medida of medidas" :value="medida">{{medida}}</option>
+                                            </select>
+                                            <select  v-if="nombre == 'PRINT'" @change="actualizarInformacion(nombre)"  v-model="productoMedidaPrint">
+                                                <option v-for="medida of medidas" :value="medida">{{medida}}</option>
+                                            </select>
+                                            <p v-if="nombre == 'LLAVERO'" class="m-0">5cm x 4cm</p>
+                                            <p v-if="nombre == 'TAZA'" class="m-0">8cm diametro</p>
+                                        </td>
+                                        <td>
+                                            <select  v-if="nombre == 'REMERA'" @change="actualizarInformacion(nombre)" v-model="productoColor">
+                                                <option v-for="color of colores" :value="color">{{color}}</option>
+                                            </select>
+                                            <p v-if="nombre =='TAZA' || nombre == 'PRINT' || nombre =='LIBRETA'" class="m-0">BLANCA</p>
+                                            <p v-if="nombre == 'LLAVERO' " class="m-0">Transparente</p>
+                                        </td>
+                                        <td v-if="nombre == 'REMERA'">{{remeras.stock}}</td>
+                                        <td v-if="nombre == 'REMERA'">{{remeras.descripcion}}</td>
+                                        <td v-if="nombre == 'REMERA'">{{remeras.precio.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
+                                        <td v-if="nombre == 'REMERA'"><img class="icono-modificar" src="./assets/images/pen.png" @click="modificarProducto(nombre, remeras.id)"></td>
+                                        <td v-if="nombre == 'LIBRETA'">{{libretas.stock}}</td>
+                                        <td v-if="nombre == 'LIBRETA'">{{libretas.descripcion}}</td>
+                                        <td v-if="nombre == 'LIBRETA'">{{libretas.precio.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
+                                        <td v-if="nombre == 'LIBRETA'"><img class="icono-modificar" src="./assets/images/pen.png" @click="modificarProducto(nombre, libretas.id)"></td>
+                                        <td v-if="nombre == 'LLAVERO'">{{llaveros.stock}}</td>
+                                        <td v-if="nombre == 'LLAVERO'">{{llaveros.descripcion}}</td>
+                                        <td v-if="nombre == 'LLAVERO'">{{llaveros.precio.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
+                                        <td v-if="nombre == 'LLAVERO'"><img class="icono-modificar" src="./assets/images/pen.png" @click="modificarProducto(nombre, llaveros.id)"></td>
+                                        <td v-if="nombre == 'TAZA'">{{tazas.stock}}</td>
+                                        <td v-if="nombre == 'TAZA'">{{tazas.descripcion}}</td>
+                                        <td v-if="nombre == 'TAZA'">{{tazas.precio.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
+                                        <td v-if="nombre == 'TAZA'"><img class="icono-modificar" src="./assets/images/pen.png" @click="modificarProducto(nombre, tazas.id)"></td>
+                                        <td v-if="nombre == 'PRINT'">{{prints.stock}}</td>
+                                        <td v-if="nombre == 'PRINT'">{{prints.descripcion}}</td>
+                                        <td v-if="nombre == 'PRINT'">{{prints.precio.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
+                                        <td v-if="nombre == 'PRINT'"><img class="icono-modificar" src="./assets/images/pen.png" @click="modificarProducto(nombre, prints.id)"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div id="editarProductos" v-for="datos of editar" class="modificar-datos-productos">
+                                <label>Nombre</label>
+                                <p class="estilo-input">{{nombreProducto}}</p>
+                                <label>Stock</label>
+                                <input class="estilo-input" type="text" v-model="stockProducto">
+                                <label>Descripcion</label>
+                                <input class="estilo-input" type="text" v-model="descripcionProducto">
+                                <label>Precio</label>
+                                <input class="estilo-input" type="text" v-model="precioProducto">
+                                <a class="botones-contenedor-extra" @click="mensaje()">Actualizar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="ilustradores" class="ocultar contenedor-tabla">
+                        <table id="tablaIlustradores">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Nick</th>
+                                    <th>Ciudad</th>
+                                    <th>Ilustraciones</th>
+                                    <th>Redes</th>
+                                    <th>Avatar</th>
+                                    <th>Modificar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="ilustrador of ilustradores">
+                                    <td>{{ilustrador.nombre}}</td>
+                                    <td>{{ilustrador.nick}}</td>
+                                    <td>{{ilustrador.ciudad}}</td>
+                                    <td>
+                                        <select >
+                                            <option v-for="ilustracion of ilustrador.ilustraciones">{{ilustracion.nombre}}</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select >
+                                            <option v-for="redes of ilustrador.redesSociales">{{redes}}</option>
+                                        </select>
+                                    </td>
+                                    <td><img class="avatar-img" :src="ilustrador.avatarURL" :alt="ilustrador.nick" :titulo="ilustrador.nick"></td>
+                                    <td><img class="icono-modificar" src="./assets/images/pen.png" @click="modificarIlustrador(ilustrador.email)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="editarProductos" v-for="ilus of ilustrador" class="modificar-datos-productos">
+                            <label>Nombre</label>
+                            <p class="estilo-input">{{ilus.nombre}}</p>
+                            <label>Nick</label>
+                            <input class="estilo-input" type="text" v-model="nickIlustrador">
+                            <label>Ciudad</label>
+                            <input class="estilo-input" type="text" v-model="ciudadIlustrador">
+                            <label>Avatar</label>
+                            <input class="estilo-input" type="text" v-model="avatarIlustrador">
+                            <a class="botones-contenedor-extra" @click="mensaje()">Actualizar</a>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div>
+
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p class="titulo-footer">Proyecto final MindHub - Cohort 41</p>
+            <p class="texto-footer">Oscar Schwerdt - Joel Trinidad - Cameron Velasquez - Alejo Lozano - Emilia Sosa</p>
+        </footer>
+    </div>
+</body>
+</html>

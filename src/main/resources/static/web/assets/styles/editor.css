@@ -1,0 +1,567 @@
+:root{
+    --violet: #bc6ec9;
+    --blue-green: #5bafa2;
+}
+@font-face {
+    font-family: 'bahnschrift'; 
+    src: url('../fonts/bahnschrift.ttf');
+}
+.body_editor{
+    position: relative;
+}
+.editor-blanca,.editor-color{
+    height: 100%;
+    /* width: 50%; */
+    object-fit: contain;
+    object-position: bottom;
+    opacity: 0;
+    /* transform: rotateY(180deg); */
+    position: absolute;
+    bottom: 0rem;
+    left: -20rem;
+}
+.editor-blanca{
+    /* transform: rotateY(180deg); */
+    filter: grayscale();
+    /* filter: hue-rotate(20deg); */
+    mix-blend-mode: hard-light;
+    z-index: -2;
+    animation: imagen-deslizar-carrito 1s forwards;
+}
+.editor-color{
+    z-index: -1;
+    -webkit-mask-image: url(../images/hero-mask-inverse.png);
+    mask-image: url(../images/hero-mask-inverse.png);
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    animation: animacion-pintar 1s steps(32) forwards 1s, imagen-deslizar-carrito 1s forwards;
+}
+@keyframes imagen-deslizar-carrito {
+    80%{
+        left: -5rem;
+    }
+    100%{
+        left: -5rem;
+        opacity: .8;
+    }
+}
+.main__editor{
+    /* width: 90%;
+    min-height: 50rem;
+    margin: 0 auto;
+    font-family: 'bahnschrift'; */
+    min-height: 85vh;
+    display: flex;
+    flex-direction: row !important;
+    width: 100%;
+    z-index: 1;
+    justify-content: flex-end;
+    padding: 0rem 2rem 1rem 2rem;
+}
+.contenedor-editor{
+    width: 100%; 
+    min-height: 73vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.titulo-seccion{
+    border-bottom: 4px solid white;
+    width: 100%;
+    text-align: center !important;
+}
+.contenedor-info-carrusel_editor{
+    margin: 2rem auto;
+    width: 92%;
+    padding: .5rem;
+    /* height: 8rem; */
+    background-color: white;
+    border: 2px solid black;
+    border-width: 3px 3px 5px 5px;
+    border-radius:1% 95% 1% 95%/95% 4% 92% 5%;
+}
+.titulo-info-ilustrador{
+    font-family: 'Bangers',cursive !important;
+    letter-spacing: .08em !important;
+}
+.info-ilustrador_editor p{
+    font-family: 'Mouse Memoirs', sans-serif;
+    font-size: 1rem;
+}
+.info-ilustrador_editor div{
+    gap: 0rem;
+}
+#carrousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 29%;
+}
+#carrousel img {
+    height: 7rem;
+    width: 7rem;
+    object-fit: cover;
+    background-color: #0004;
+}
+.next-button, .prev-button{
+    width: 2rem;
+    cursor: pointer;
+}
+.contenedor-iconos{
+    gap: 7rem;
+    top: 3.5rem;
+    width: 0%;
+}
+.texto-guia{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: white;
+    padding: .5rem;
+    width: 96%;
+    text-align: center;
+    font-size: .7rem;
+    font-weight: bolder;
+    border: 2px solid black;
+    border-width: 1px 1px 2px 2px;
+    border-radius:1% 95% 1% 95%/95% 4% 92% 5%;
+}
+.info-texto__editor{
+    font-size: 10px;
+}
+.contenedor-productos_editor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.contenedor-productos_editor-selector{
+    width: 96%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid black;
+    border-width: 2px 2px 3px 4px;
+    border-radius:1% 95% 1% 95%/95% 4% 92% 5%;
+    padding: 1rem;
+    gap: .5rem;
+}
+.contenedor-productos_editor-selector h6{
+    font-family: 'Bangers',cursive !important;
+    letter-spacing: .08em !important;
+    font-size: 1.5rem;
+    margin: 0;
+    border-bottom: 2px dashed black;
+}
+.contenedor-productos_editor span{
+    padding: .2rem;
+}
+.contenedor-productos_editor span img{
+    width: 2rem;
+    height: 2rem;
+    filter: brightness(.5);
+}
+.poductos-iconos{
+    width: 80%;
+}
+.img-template{
+    width: 44%;
+    /* height: 8rem; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+.contenedor2_editor{
+    width: 96%;
+    margin: 1rem auto;
+    background-color: white;
+    border: 2px solid black;
+    border-width: 3px 3px 5px 5px;
+    border-radius:1% 95% 1% 95%/95% 4% 92% 5%;
+    padding: 1rem;
+}
+.vista-previa__editor-producto,
+.vista-previa__editor-producto-llavero,
+.vista-previa__editor-producto-cuaderno,
+.vista-previa__editor-producto-retrato,
+.vista-previa__editor-producto-taza,
+.vista-previa__remera-rojo{
+    background-position: center;
+    background-size: calc(90%);
+    background-repeat: no-repeat;
+    width: 16.6rem;
+}
+.vista-previa__remera-rojo {
+    background-image: url(../images/productos/remera_roja.png);
+}
+.vista-previa__remera-azul {
+    background-image: url(../images/productos/remera_azul.png);
+}
+.vista-previa__remera-verde {
+    background-image: url(../images/productos/remera_verde.png);
+}
+.vista-previa__remera-rosa {
+    background-image: url(../images/productos/remera_rosa.png);
+}
+.vista-previa__remera-amarillo {
+    background-image: url(../images/productos/remera_amarilla.png);
+}
+.vista-previa__editor-producto {
+    background-image: url(../images/productos/remera_blanca.png);
+}
+.vista-previa__editor-producto-llavero {
+    background-image: url(../images/productos/llavero-plastico-cuadrado.png);
+}
+.vista-previa__editor-producto-cuaderno {
+    background-image: url(../images/productos/cuaderno.png);
+}
+.vista-previa__editor-producto-retrato {
+    background-image: url(../images/productos/Poster-Mockup.png);
+}
+.vista-previa__editor-producto-taza {
+    background-image: url(../images/productos/taza_2.png);
+}
+.vista-previa_editor{
+    background-color: #0003;
+    border: 2px solid black;
+    border-width: 1px 1px 2px 1px;
+    border-radius:1% 95% 1% 95%/95% 4% 92% 5%;
+    min-width: 15rem;
+    min-height: 17rem;
+
+}
+.vista-previa_editor .img-template{
+    -webkit-mask-image: url(../images/mascara-producto.png);
+    -webkit-mask-size: 100% 100%;
+    mask-image: url(../images/mascara-producto.png);
+    mask-size: 100% 100%;
+}
+.vista-previa__editor-producto-taza .img-template{
+    mix-blend-mode: darken;
+    -webkit-mask-image: url(../images/mascara-taza.png);
+    -webkit-mask-size: 100% 100%;
+    mask-image: url(../images/mascara-taza.png);
+    mask-size: 100% 100%;
+}
+
+.colores-editor{
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid black;
+    border-radius: 50%;
+    transition: all .3s;
+}
+.rojo{
+    cursor: pointer;
+    background-color: #d73636;
+}
+.azul{
+    cursor: pointer;
+    background-color: #364ed7;
+}
+.verde{
+    cursor: pointer;
+    background-color: #36d75e;
+}
+.blanco{
+    cursor: pointer;
+    background-color: #e7e7e7;
+}
+.rosa{
+    cursor: pointer;
+    background-color: #f86390;
+}
+.amarillo{
+    cursor: pointer;
+    background-color: #bdd343;
+}
+.btn-agregar-carrito{
+    border: 2px solid black;
+    border-width: 3px 3px 5px 4px;
+    border-radius:1% 95% 2% 95%/95% 1% 92% 2%;
+    padding: .3rem .5rem;
+    background-color: var(--green);
+    font-weight: bold;
+    color: black;
+    font-size: 1.5rem;
+    font-family: 'Bangers',cursive !important;
+    letter-spacing: .08em !important;
+}
+.vista-prev-colores-remera{
+    background-position: center;
+    background-size: calc(90%);
+    background-repeat: no-repeat;
+    width: 15rem;
+    height: 17rem;
+}
+.seleccion-colores .colorSeleccionado{
+    width: 1.8rem;
+    height: 1.8rem;
+    box-shadow: 2px 2px black;
+}
+
+.talle{
+    width: 1.5rem;
+    height: 1.5rem;
+    /* border-radius: 50%; */
+    transition: all .3s;
+}
+.productoSeleccionado{
+    border-bottom: 3px solid black;
+    filter: brightness(.1);
+}
+.contenedor-colores-btn{
+    height: 100%;
+}
+.contenedor-2-hijo{
+    height: 100%;
+}
+.contenedor-colores-talles{
+    width: 100%;
+}
+.colores-talles{
+    height: 100%;
+    width: 100%;
+}
+.colores-talles>div{
+    height: 100%;
+    border: 2px solid black;
+    border-width: 1px 1px 2px 1px;
+    border-radius:1% 95% 2% 95%/95% 1% 92% 2%;
+    padding: .5rem;
+}
+.colores-talles h6{
+    font-family: 'Bangers',cursive !important;
+    letter-spacing: .08em !important;
+}
+.colores-talles>div>div{
+    height: 90%;
+}
+.contenedo-btn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    padding-bottom: 0;
+}
+.talles_editor{
+    font-family: 'Mouse Memoirs', sans-serif;
+    font-weight: bolder;
+    font-size: 1.5rem;
+    
+}
+.talles_editor span{
+    cursor: pointer;
+}
+.talles_editor .colorSeleccionado{
+    font-size: 1.8rem;
+    border-bottom: 2px solid black;
+}
+.vista-talles{
+    width: 100%;
+}
+.contenedor-principal_editor{
+    background: linear-gradient(#fffa, #fff3);
+    width: 100%;
+}   
+.vista-previa-arte-editor{
+    -webkit-mask-image: url(../images/mascara-producto.png);
+    -webkit-mask-size: 100% 100%;
+    mask-image: url(../images/mascara-producto.png);
+    mask-size: 100% 100%;
+}
+@media (max-width: 550px) {
+    .vista-previa_editor{
+        min-width: 10rem;
+        min-height: 12rem;
+    }
+    .vista-prev-colores-remera{
+        width: 10rem;
+        height: 12rem;
+    }
+    .vista-talles{
+        gap: .2rem !important;
+    }
+    .img-template{
+        width: 4rem;
+        height: auto;
+    }
+}
+@media (min-width: 768px) {
+
+    .contenedor-iconos {
+        top: 5.5rem;
+    }
+    .contenedor-principal_editor{
+        padding: 1rem;
+    }
+    .contenedor-info-carrusel_editor {
+        margin: 0;
+        /* width: 60%; */
+        padding: .8rem;
+    }
+    .img-template {
+        width: 44%;
+        /* height: 12rem; */
+    }
+    #carrousel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        width: 100%;
+    }
+    .customizalo{
+        width: 70%;
+        font-size: 5rem;
+    }
+    .info-ilustrador_editor p{
+        font-size: 1rem;
+    }
+    .poductos-iconos{
+        height: 91%;
+    }
+    .poductos-iconos span:first-child{
+        padding-left: 1rem;
+    }
+    .poductos-iconos span:not(:first-child){
+        padding: .2rem .6rem;
+    }
+    .contenedor1_editor{
+        flex-direction: column;
+        width: 90%;
+    }
+    .body__editor {
+        min-height: 35rem;
+    }
+    .btn-agregar-carrito {
+        padding: .7rem 1rem;
+        font-size: 1.5rem;
+    }
+    .contenedor-bt-carrito_editor button{
+        width: 9rem;
+    }
+    .vista-previa_editor {
+        width: 13rem;
+        height: 15rem;
+    }
+    .vista-talles{
+        width: 90%;
+        gap: 0;
+        
+    }
+    .contenedor2_editor{
+        margin: 0;
+    }
+    .contenedo-btn{
+        bottom: 0rem;
+    }
+    /* .vista-prev-colores-remera {
+        width: 13rem;
+        height: 15rem;
+    } */
+}
+.agregar-quitar-productos{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+
+@media (min-width: 1024px){
+    .info-ilustrador_editor p{
+        font-size: 1.5rem;
+    }
+    .contenedor-iconos {
+        top: 8rem;
+    }
+    .titulo-seccion{
+        text-align: end !important;
+    }
+    .contenedor-editor{
+        width: 60%;
+        min-width: 926px; 
+        align-items: center;
+    }
+    .contenedor1_editor {
+        width: 45%;
+    }
+    .contenedor-principal_editor{
+        width: 90%;
+        gap: 3rem;
+    }
+    .contenedor-info-carrusel_editor {
+        /* width: 68%; */
+        height: 100%;
+        
+    }
+    .vista-previa_editor {
+        width: 22rem;
+        height: 27rem;
+    }
+    .contenedor2_editor{
+        width: 50%;
+    }
+    .texto-guia {
+        /* text-align: end; */
+        width: 80%;
+    }
+    .vista-previa__editor-producto,
+    .vista-previa__editor-producto-llavero,
+    .vista-previa__editor-producto-cuaderno,
+    .vista-previa__editor-producto-retrato,
+    .vista-previa__editor-producto-taza
+    {
+        background-size: calc(100%);
+        width: 14rem;
+        height: 27rem;
+    }
+    .customizalo {
+        width: 36%;
+        margin-left: 27rem;
+    }
+    .texto-guia {
+        margin-top: 0;
+        margin-left: -4.5rem;
+        font-size: 12px;
+    }
+    .contenedo-btn {
+        margin-left: 0rem;
+    }
+    .vista-prev-colores-remera {
+        background-size: calc(112%);
+        /* width: 14rem; */
+        height: 27rem;
+    }
+    .vista-talles {
+        width: 100%;
+    }
+    .ilustracion_aditor{
+        background-image: url('../images/illustrations/Illust_Joel/ilustacion.png');
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 40rem;
+        height: 35rem;
+        bottom: 0rem;
+        left: -8rem;
+    }
+    .img-template {
+        width: 55%;
+        /* height: 10rem; */
+    }
+    #carrousel img {
+        height: 9rem;
+        width: 7rem;
+    }
+    .pointer{
+        cursor: pointer;
+    }
+    .btn-agregar-carrito {
+        font-size: 1.5rem;
+    }
+    .titulo-seccion{
+        text-align: initial;
+    }
+}

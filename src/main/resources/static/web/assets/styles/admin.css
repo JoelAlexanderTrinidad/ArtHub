@@ -1,0 +1,230 @@
+main{
+    background-color: #0005;
+}
+.submenu-contenedor{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 5rem;
+}
+
+.botones-contenedor{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: aquamarine;
+    width: 15rem;
+    border-radius: 1rem;
+    border: 2px solid white;
+    height: 2rem;
+    margin-right: 1rem;
+    font-family: 'Bangers',cursive;
+    letter-spacing: .15rem;
+    font-size: 1.3rem;
+    border-width: 3px 2px 1px 2px;
+    border-radius:1% 95% 1% 95%/95% 14% 92% 5%;
+}
+
+.boton-desactivado{
+    cursor: pointer;
+    background-color: rgb(179, 179, 179);
+    opacity: .7;
+}
+
+.botones-contenedor p{
+    margin: 0;
+}
+
+.boton-desactivado:hover{
+    background-color: rgb(255, 127, 202);
+    opacity: 1;
+}
+
+.contenedor-informacion{
+    width: 100%;
+    height: 70vh;
+}
+
+table{
+    font-family: 'Bangers',cursive;
+    letter-spacing: .15rem;
+    border: 2px solid rgb(0, 0, 0);
+    border-width: 3px 2px 1px 2px;
+    border-radius:1% 95% 1% 95%/95% 3% 92% 2%;
+    border-collapse: collapse;
+}
+thead{
+    color: rgb(124, 38, 150);
+}
+tr, td, th{
+    padding: 1rem;
+    font-size: 1.4rem;
+    border-collapse: collapse;
+    border: 2px solid rgb(0, 0, 0);
+    border-width: 3px 2px 1px 2px;
+    border-radius:1% 95% 1% 95%/95% 3% 92% 2%;
+    text-align: center;
+}
+
+tr:hover{
+    background-color: rgba(148, 247, 239, 0.178);
+}
+
+td{
+    font-size: 1.2rem;
+}
+
+.botones-contenedor-extra{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(124, 38, 150);
+    width: 100%;
+    border-radius: 1rem;
+    border: 2px solid white;
+    height: 3rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    font-family: 'Bangers',cursive;
+    letter-spacing: .15rem;
+    font-size: 1.3rem;
+    border-width: 3px 2px 1px 2px;
+    border-radius:1% 95% 1% 95%/95% 14% 92% 5%;
+    transition: .5s;
+    text-decoration: none;
+    color: white;
+    margin-top: 1rem;
+}
+
+
+.botones-contenedor-extra:hover{
+    border-color:  rgb(255, 255, 255);
+    background-color: rgb(68, 124, 176);
+    color: black;
+}
+
+select{
+    width: 100%;
+    height: 2rem;
+    border: 2px solid rgb(0, 0, 0);
+    border-width: 3px 2px 1px 2px;
+    border-radius:1% 95% 1% 95%/95% 3% 92% 2%;
+}
+
+.icono-modificar{
+    height: 1.2rem;
+    cursor: pointer;
+}
+
+
+
+.contenedor-tabla{
+    background-color: white;
+    border: 2px solid rgb(0, 0, 0);
+    border-width: 3px 2px 1px 2px;
+    border-radius:1% 95% 1% 95%/95% 3% 92% 2%;
+}
+
+.modificar-datos-productos{
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    font-family: 'Bangers',cursive;
+    letter-spacing: .15rem;
+}
+
+label{
+    font-size: 1.5rem;
+    color: rgb(179, 46, 184);
+}
+
+.estilo-input{
+    border: none;
+    font-size: 1.7rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid black;
+}
+
+.estilo-input:focus{
+    border-bottom: none;
+    border: 3px solid rgb(0, 0, 0);
+    border-width: 3px 2px 1px 2px;
+    border-radius:1% 95% 1% 95%/95% 3% 92% 2%;
+}
+
+.contenedor-inicioSesionRegistro{
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: modal-deslizar 1s forwards;
+}
+
+@keyframes modal-deslizar {
+    0%{
+        left: -10rem;
+        opacity: 0;
+    }
+    100%{
+        left: 0rem;
+        opacity: 1;
+    }
+}
+
+.contenedor-despedida{
+    animation: modal-deslizar-fuera 1s forwards;
+}
+
+@keyframes modal-deslizar-fuera {
+    0%{
+        left: 0rem;
+        opacity: 1;
+    }
+    100%{
+        left: 10rem;
+        opacity: 0;
+    }
+}
+
+.contenedor-inicioSesion{
+    background-color: white;
+    padding: 2rem;
+    min-width: 25vw;
+    border: 2px solid black;
+    border-width: 3px 3px 5px 5px;
+    border-radius:1% 95% 1% 95%/95% 2% 98% 5%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.ocultar{
+    display: none;
+}
+
+.error-texto{
+    color: red;
+    font-family: 'Bangers',cursive;
+    letter-spacing: .15rem;
+    font-size: 1.4rem;
+    text-align: center;
+    height: 1rem;
+    animation: erorr .5s;
+}
+
+.texto-mensaje{
+    color: rgb(32, 124, 124);
+    font-family: 'Bangers',cursive;
+    letter-spacing: .15rem;
+    font-size: 1.4rem;
+}
+
+.avatar-img{
+    border-radius: 50%;
+    height: 5rem;
+}

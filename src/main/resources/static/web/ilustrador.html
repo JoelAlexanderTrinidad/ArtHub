@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/131d9c1f34.js" crossorigin="anonymous"></script>
+    <script defer src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script defer src="./assets/scripts/ilustrador.js"></script>
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <link rel="stylesheet" href="./assets/styles/index.css">
+    <link rel="stylesheet" href="./assets/styles/ilustrador.css">
+    <link rel="shortcut icon" href="./assets/images/logonegro.png" type="image/x-icon">
+    <title>Shop | Ilustrador</title>
+</head>
+<body id="app" style="background-color: black;">
+    <div class="bg-animation">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        <div id="stars4"></div>
+    </div>
+    <div class="contenedor-overflow">
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark">
+                <div class="container navegacion">
+                    <img src="./assets/images/logo.png" alt="Logo" class="logo">
+                    <a class="navbar-brand" href="./index.html">ARTHUB</a>
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavId">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="./cuenta.html" v-if="loginAux" v-cloak>Mi cuenta</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./productos.html">Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./artistas.html">Artistas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./carrito.html" v-if="loginAux" v-cloak>Carrito</a>
+                            </li>
+                            <li class="nav-item link-bordeado" @click="cerrarModal()" v-if="!loginAux" v-cloak>
+                                <a class="nav-link">Login</a>
+                            </li>
+                            <li class="nav-item link-bordeado" v-if="loginAux"  @click="logOut()" v-cloak>
+                                <a class="nav-link" href="">Logout</a>
+                            </li>                     
+                        </ul>
+                    </div>
+                </div>
+            </nav>    
+        </header>
+        <main>
+            <div class="contenedor-inicioSesionRegistro ocultar-modal" id="inicioSesionRegistro">
+                <div class="contenedor-inicioSesion ocultar-modal texto-mensaje" id="mensaje"></div>
+                <div class="contenedor-inicioSesion" id="inicioSesion">
+                    <div class="boton-cerrar" >
+                        <p @click="cerrarModal()" class="equis-boton">X</p>
+                    </div>
+                    <p class="titulo-registroInicio">Inicia sesion</p>
+                    <form>
+                        <label>Usuario</label>
+                        <input type="text" v-model="emailONick">
+                        <label>Contraseña</label>
+                        <input type="password" v-model="contraseña">
+                    </form>
+                    <p class="error-texto" v-cloak>{{error}}</p>
+                    <div class="boton-contenedor" @click="logIn()">
+                        <p>Iniciar sesion</p>
+                    </div>
+                    <div class="contenedor-texto-extra-inicioSesion">
+                        <p>No tienes cuenta?</p>
+                        <p @click="mostrarRegistro()" class="texto-extra-color">Registrate</p>
+                    </div>
+                    
+                </div>
+                <div class="contenedor-Registro ocultar-modal" id="registro">
+                    <div class="boton-cerrar" >
+                        <p></p>
+                        <p @click="cerrarModal()" class="equis-boton">X</p>
+                    </div>
+                    <p class="titulo-registroInicio">Registrate</p>
+                    <form class="contenedor-registro-formulario">
+                        <div>
+                            <label>Nombre</label>
+                            <input type="text" v-model="nombre">
+                            <label>Nick</label>
+                            <input type="text" v-model="nick">
+                            <label>Ciudad</label>
+                            <input type="text" v-model="ciudad">
+                            <label>Pais</label>
+                            <input type="text" v-model="pais">
+                            <label>Email</label>
+                            <input type="text" v-model="email">
+                        </div>
+                        <div>
+                            <label>Apellido</label>
+                            <input type="text" v-model="apellido">
+                            <label>Direccion</label>
+                            <input type="text" v-model="direccion">
+                            <label>Codigo Postal</label>
+                            <input type="text" v-model="codigoPostal">
+                            <label>Descripcion direccion</label>
+                            <input type="text" v-model="descripcionExtra">
+                            <label>Contraseña</label>
+                            <input type="password" v-model="contraseñaRegistro">
+                        </div>
+                    </form>
+                    <p class="error-texto" v-cloak>{{error}}</p>
+                    <div class="boton-contenedor" @click="registro()">
+                        <p>Registrate</p>
+                    </div>
+                    <div class="contenedor-texto-extra-inicioSesion">
+                        <p @click="mostrarRegistro()" class="texto-extra-color">Inicia sesion</p>
+                    </div>
+                </div>
+            </div>
+            <img class="ilustrador-blanca" src="./assets/images/ilustrador-blanca.png">
+            <img class="ilustrador-color" src="./assets/images/ilustrador-color.png">
+            <section class="ilustrador-elementos-contenedor">
+                <h2 class="titulo-seccion">Ilustrador</h2>
+                <div class="linea-titulo"></div>
+                <div class="ilustrador-contenido-contenedor">
+                    <div class="ilustrador-contenedor">
+                        <div class="imagen-ilustrador-contenedor">
+                            <img v-cloak class="imagen-ilustrador" :src="imagenIlustrador" :alt="nick" :title="nick">
+                        </div>
+                        <div class="contenedor-informacion-ilustrador">
+                            <div class="texto-ilustrador-contenedor">
+                                <p v-cloak class="nick-ilustrador">{{nickTitulo}}</p>
+                                <p class="texto-ilustrador-informacion">Ilustraciones: <b v-cloak>{{ilustracionesCantidad}}</b></p>
+                                <p class="texto-ilustrador-informacion">Ciudad: <b v-cloak>{{ciudadIlustrador}}</b></p>
+                            </div>
+                            <div class="redessociales-contenedor">
+                                <div class="redessociales">
+                                    <img class="logo-redsocial" src="./assets/images/instagram.png" alt="Logo Instagram" title="Logo Instagram">
+                                    <p v-cloak class="texto-redsocial" ><a  class="texto-redsocial-a" href="https://www.instagram.com/" target="_blank"> {{redes[0]}}</a></p>
+                                </div>
+                                <div class="redessociales">
+                                    <img class="logo-redsocial" src="./assets/images/twitter.png" alt="Logo Twitter" title="Logo Twitter">
+                                    <p v-cloak class="texto-redsocial"><a class="texto-redsocial-a" href="https://twitter.com/" target="_blank">{{redes[1]}}</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-cloak class="ilustraciones-contenedor"  v-if="ilustraciones">
+                        <div v-for="ilustracion of ilustraciones" >
+                            <div class="ilustracion-individual-contenedor" @click="verProductos(ilustracion.id)">
+                                <img v-cloak class="imagen-ilustracion" :src="ilustracion.imgURL" :title="ilustracion.nombre">
+                                <p v-cloak class="ilustracion-texto">{{ilustracion.nombre}}</p>
+                                <p v-cloak class="ilustracion-texto-secundario" >Ver productos</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="ilustraciones.length == 0">
+                        <p>No tienes ilustraciones</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button class="boton-checkout" data-bs-toggle="modal" data-bs-target="#checkout" @click="volver()">Volver</button>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p class="titulo-footer">Proyecto final MindHub - Cohort 41</p>
+            <p class="texto-footer">Oscar Schwerdt - Joel Trinidad - Cameron Velasquez - Alejo Lozano - Emilia Sosa</p>
+        </footer>
+    </div>
+</body>
+</html>

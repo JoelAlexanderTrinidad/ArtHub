@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/131d9c1f34.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <link rel="stylesheet" href="./assets/styles/index.css">
+    <link rel="stylesheet" href="./assets/styles/cuenta.css">
+    <link rel="shortcut icon" href="./assets/images/logonegro.png" type="image/x-icon">
+    <title>Shop | Mi Cuenta</title>
+</head>
+<body id="app" style="background-color: black;">
+    <div class="bg-animation">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        <div id="stars4"></div>
+    </div>
+    <div class="contenedor-overflow">
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark">
+                <div class="container navegacion">
+                    <img src="./assets/images/logo.png" alt="Logo" class="logo">
+                    <a class="navbar-brand" href="./index.html">ARTHUB</a>
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavId">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#" v-if="loginAux" v-cloak>Mi cuenta</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./productos.html">Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./artistas.html" v-if="loginAux" v-cloak>Artistas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./carrito.html">Carrito</a>
+                            </li>
+                            <li class="nav-item link-bordeado "  @click="logOut()" v-cloak>
+                                <a class="nav-link" href="">Logout</a>
+                            </li>                           
+                        </ul>
+                    </div>
+                </div>
+            </nav>            
+        </header>
+        <main>
+            <div class="contenedor-inicioSesionRegistro ocultar-modal" id="inicioSesionRegistro">
+                <div class="contenedor-inicioSesion ocultar-modal texto-mensaje" id="mensaje"></div>
+            </div>
+            <img class="cuenta-blanca" src="./assets/images/cuenta-blanca.png">
+            <img class="cuenta-color" src="./assets/images/cuenta-color.png">
+            <section class="datos-compras-contenedor">
+                <h2 class="titulo-seccion">Mi cuenta</h2>
+                <div class="linea-titulo">.</div>
+                <div class="datos-contenedor">
+                    <div class="titulo-imagen-contenedor">                            
+                        <div class="imagen-datos-contenedor">
+                            <div v-if="!imagenUsuario == ''">
+                                <img v-cloak class="imagen-datos" :src="imagenUsuario" :alt="nick" :title="nick" >
+                            </div>
+                            <div v--if="imagenUsuario == ''" class="subir-imagen-contenedor">
+                                <p class="texto-imagen">Sube tu avatar</p>
+                                <input type="file" class="input-imagen" id="file-imagen" >
+                                
+                                <p class="texto-imagen-secundario">Maximo 10mb</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="contenedor-formulario-nombre">
+                        <div class="imagen-datos-editar-navegar-contenedor">                             
+                            <div>
+                                <div class="nombre-editar-contenedor">
+                                    <h2 class="titulo-nombre">Hola <span v-cloak class="nick-color">{{nickTitulo}}</span></h2>
+                                    <img v-cloak class="icono-editar" src="./assets/images/pen.png" alt="Editar" @click="activarFormulario()" id="iconoEditar">
+                                </div>
+                                <div class="datos-compras-navegacion-contenedor">
+                                    <p class="informacion-navegar informacion-navegar-activo" @click="mostrarDatos('datosEditar','historialCompras', 'datosTexto', 'historialTexto')" id="datosTexto">Mis datos</p>
+                                    <p class="informacion-navegar"  @click="mostrarDatos('historialCompras', 'datosEditar', 'historialTexto', 'datosTexto')" id="historialTexto">Mis compras</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div  id="datosEditar">
+                            <form>
+                                <div class="formulario-contenedor">
+                                    <div class="formulario-label-input">
+                                        <label>Nombre</label>
+                                        <input v-cloak class="formulario-input" type="text" v-model="nombre" readonly>
+                                        <label>Nick</label>
+                                        <input v-cloak class="formulario-input" type="text" v-model="nick" readonly>
+                                        <label>Direccion</label>
+                                        <input v-cloak class="formulario-input" type="text" v-model="direccion" readonly>
+                                        <label>Ciudad</label>
+                                        <input v-cloak class="formulario-input" type="text" v-model="ciudad" readonly>
+                                    </div>
+                                    <div class="formulario-label-input">
+                                        <label>Apellido</label>
+                                        <input v-cloak class="formulario-input" type="text" v-model="apellido" readonly>
+                                        <label>Email</label>
+                                        <p v-cloak class="formulario-input">{{email}}</p>
+                                        <label>Codigo Postal</label>
+                                        <input v-cloak class="formulario-input" type="text" v-model="codigoPostal" readonly>
+                                        <label>Pais</label>
+                                        <input v-cloak class="formulario-input" type="text" v-model="pais" readonly>
+                                    </div>
+                                </div>
+                                <div class="formulario-label-input formulario-label-input-informacionExtra">
+                                    <label>Informacion extra</label>
+                                    <input v-cloak class="formulario-input formulario-input-informacionExtra" type="text" v-model="descripcionExtra" readonly>
+                                </div>
+                            </form>
+                            <div class="contenedor-boton">
+                                <div class="boton-actualizarDatos" @click="actualizar()">
+                                    <p class="boton-texto">ACTUALIZAR DATOS</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="compra-granTitulo-contenedor ocultar-capa" id="historialCompras">
+                            <div class="compra-contenedor">
+                                <div class="detalleCompra-contenedor" v-for="producto of productos" v-if="productos">
+                                    <h3 class="compra-titulo"  v-cloak >COMPRA #{{producto.numeroDeCompra}}</h3>
+                                    <div class="productos-descripcion-contenedor">
+                                        <img class="imagen-producto" :src="producto.productos.productoIlustracionId.ilustracionId.imgURL" :alt="producto.productos.productoIlustracionId.nombre" >
+                                        <div>
+                                            <h3 class="titulo-producto"  v-cloak >REMERA  {{producto.productos.productoIlustracionId.nombre}}</h3>
+                                            <p class="informacion-producto-texto"  v-cloak >TALLA:  {{producto.productos.productoIlustracionId.descripcion}}</p>
+                                            <p class="informacion-producto-texto"  v-cloak >CANTIDAD: {{producto.productos.cantidad}}</p>
+                                            <P class="informacion-producto-texto"  v-cloak >DESCRIPCION: {{producto.productos.productoIlustracionId.descripcion}}</P>
+                                        </div>
+                                    </div>
+                                    <p class="precioTotal-compra"  v-cloak >TOTAL {{producto.montoTotal.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</p>
+                                </div>
+                                <div v-if="productos.length == 0" class="sin-compras">
+                                    <p>No compraste productos.</p>
+                                    <div class="contenedor-boton">
+                                        <div class="boton-actualizarDatos boton-actualizarDatos-bordenegro" @click="verProductos()">
+                                            <p class="boton-texto">Ver productos</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        </main>
+        <footer>
+            <p class="titulo-footer">Proyecto final MindHub - Cohort 41</p>
+            <p class="texto-footer">Oscar Schwerdt - Joel Trinidad - Cameron Velasquez - Alejo Lozano - Emilia Sosa</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./assets/scripts/cuenta.js"></script>
+</body>
+</html>
