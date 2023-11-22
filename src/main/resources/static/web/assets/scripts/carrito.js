@@ -42,11 +42,11 @@ createApp( {
             return numberFormat.format(amount);
         },
         cargarDatos(){
-            axios.get("/api/productos")
+            axios.get("https://arthub-an6d.onrender.com/api/productos")
             .then(res=>{
                 this.listaProductosGenericos=res.data;
             })
-            axios.get(`/api/ilustraciones`)
+            axios.get(`https://arthub-an6d.onrender.com/api/ilustraciones`)
             .then(res=>{
                 this.listaIlustraciones=res.data;
             })
@@ -116,7 +116,7 @@ createApp( {
             this.cargarDatos()
         },
         informacion(){
-            axios.get(`/api/usuario/actual`)
+            axios.get(`https://arthub-an6d.onrender.com/api/usuario/actual`)
                 .then(res=> {
                     console.log(res)
                     this.nombre = res.data.nombre
@@ -134,7 +134,7 @@ createApp( {
                 .catch(error => console.log(error))
         },
         pagar(){
-            axios.post('https://mindhub-brothers-bank.up.railway.app/api/cards/transaction',{
+            axios.post('https://arthub-an6d.onrender.com/api/cards/transaction',{
                 number : this.numeroTarjeta,
                 cvv: this.cvvTarjeta,
                 description : "Items bought on Arthub",
@@ -146,7 +146,7 @@ createApp( {
                         this.pagoExitoso = false
                     }, 3000)
                     console.log(response)
-                    axios.post(`/api/email/pdf`,this.listaCarrito)
+                    axios.post(`https://arthub-an6d.onrender.com/api/email/pdf`,this.listaCarrito)
                     .then(res=>{
                         console.log("Correcto")
                     })
@@ -164,7 +164,7 @@ createApp( {
             }
         },
         actualizar(){
-            axios.patch(`/api/usuario/modificar`,`nombre=${this.nombre}&apellido=${this.apellido}&nick=${this.nick}&direccion=${this.direccion}
+            axios.patch(`https://arthub-an6d.onrender.com/api/usuario/modificar`,`nombre=${this.nombre}&apellido=${this.apellido}&nick=${this.nick}&direccion=${this.direccion}
             &codigoPostal=${this.codigoPostal}&ciudad=${this.ciudad}&pais=${this.pais}&descripcionExtra=${this.descripcionExtra}`,
                 {headers:{'content-type':'application/x-www-form-urlencoded'}})
                 .then(res=> {
@@ -183,7 +183,7 @@ createApp( {
         logOut(){
             sessionStorage.setItem('logIn', false)
             this.loginAux = false
-            axios.post('/api/logout')
+            axios.post('https://arthub-an6d.onrender.com/api/logout')
         },
         mostrarDatos(idMostrar, idOcultar, idTextoActivo,idTextoDesactivado){
             document.getElementById(idMostrar).classList.remove('ocultar-capa')

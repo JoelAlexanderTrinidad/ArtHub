@@ -38,11 +38,11 @@ createApp( {
             this.error = ""
         },
         registro(){
-            axios.post('/api/usuario/registro',
+            axios.post('https://arthub-an6d.onrender.com/api/usuario/registro',
                         {
                             nombre: this.nombre + " " + this.apellido,
                             email: this.email,
-                            contraseña: this.contraseñaRegistro,
+                            password: this.contraseñaRegistro,
                             direccion: this.direccion,
                             zipCode: this.codigoPostal,
                             pais: this.pais,
@@ -59,7 +59,7 @@ createApp( {
                 
                 this.password = this.contraseñaRegistro
                 setTimeout(()=>{
-                    axios.post('/api/login',`email=${this.nick}&password=${this.password}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                    axios.post('https://arthub-an6d.onrender.com/api/login',`email=${this.nick}&password=${this.password}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                     .then(res => { 
                         sessionStorage.setItem('logIn', true)
                         this.loginAux = true
@@ -72,7 +72,8 @@ createApp( {
                     .catch(error => {this.error = error.response.data})
                 }, 1500)
             })
-            .catch(error => {this.error = error.response.data})
+            .catch(error => console.log(this.contraseñaRegistro))
+            // {this.error = error.response.data}
         },
         logIn(){
             axios.post('/api/login',`email=${this.emailONick}&password=${this.contraseña}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})

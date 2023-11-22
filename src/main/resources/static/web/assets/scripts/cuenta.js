@@ -28,7 +28,7 @@ createApp( {
     },
     methods: {
         informacion(){
-            axios.get(`/api/usuario/actual`)
+            axios.get(`https://arthub-an6d.onrender.com/api/usuario/actual`)
                 .then(res=> {
                     this.nombre = res.data.nombre.split(" ")[0].trim()
                     this.nickTitulo = res.data.nick
@@ -56,7 +56,7 @@ createApp( {
         },
         actualizar(){
             let imagen = document.getElementById('file-imagen').files[0]
-            axios.patch(`/api/usuario/modificar`,`nombre=${this.nombre + " " + this.apellido}&nick=${this.nick}&direccion=${this.direccion}
+            axios.patch(`https://arthub-an6d.onrender.com/api/usuario/modificar`,`nombre=${this.nombre + " " + this.apellido}&nick=${this.nick}&direccion=${this.direccion}
             &zipcode=${this.codigoPostal}&ciudad=${this.ciudad}&pais=${this.pais}&descripcion=${this.descripcionExtra}&avatar=${imagen}`,
                 {headers:{'content-type':'application/x-www-form-urlencoded'}})
                 .then(res=> {
@@ -97,7 +97,7 @@ createApp( {
         logOut(){
             sessionStorage.setItem('logIn', false)
             this.loginAux = false
-            axios.post('/api/logout')
+            axios.post('https://arthub-an6d.onrender.com/api/logout')
         },
         mostrarDatos(idMostrar, idOcultar, idTextoActivo,idTextoDesactivado){
             document.getElementById(idMostrar).classList.remove('ocultar-capa')

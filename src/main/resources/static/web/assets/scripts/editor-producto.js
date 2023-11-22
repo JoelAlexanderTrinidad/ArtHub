@@ -56,7 +56,7 @@ createApp({
         logOut(){
             sessionStorage.setItem('logIn', false)
             this.loginAux = false
-            axios.post('/api/logout')
+            axios.post('https://arthub-an6d.onrender.com/api/logout')
         },
     },
     computed: {
