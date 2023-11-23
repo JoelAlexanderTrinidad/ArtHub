@@ -109,7 +109,7 @@ createApp( {
             axios.post('https://arthub-an6d.onrender.com/api/logout')
         },
         informacion(){
-            axios.get(`/https://arthub-an6d.onrender.com/api/ilustradores`)
+            axios.get(`https://arthub-an6d.onrender.com/api/ilustradores`)
             .then(res=>{
                 this.ilustradores = res.data
                 this.ilustradoresFiltrados = [...this.ilustradores]
