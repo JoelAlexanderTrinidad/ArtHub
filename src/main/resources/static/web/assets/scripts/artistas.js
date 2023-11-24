@@ -6,11 +6,11 @@ createApp( {
             nombre: "",
             nickTitulo: "",
             nick: "",
-            emailONick: "",
+            emailONick: "test@test.com",
             apellido: "",
             email: "",
             contraseñaRegistro: "",
-            contraseña: "",
+            contraseña: "1234",
             direccion: "",
             codigoPostal: "",
             ciudad: "",
@@ -109,7 +109,7 @@ createApp( {
             axios.post('https://arthub-an6d.onrender.com/api/logout')
         },
         informacion(){
-            axios.get(`https://arthub-an6d.onrender.com/api/ilustradores`)
+            axios.get(`/api/ilustradores`)
             .then(res=>{
                 this.ilustradores = res.data
                 this.ilustradoresFiltrados = [...this.ilustradores]
