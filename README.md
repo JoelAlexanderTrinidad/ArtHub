@@ -41,6 +41,7 @@ App web homebanking para gestionar cuentas bancarias de manera online. Creado co
    - JDK 11
    - Gradle
     - Clonar el proyecto.
+     - Cambiar de rama a: git checkout local-server
   ## Recargar gradle
   
   ![Captura de pantalla 2023-11-24 130814](https://github.com/JoelAlexanderTrinidad/ArtHub/assets/84977429/4a2d4d20-7037-4ea1-ad3c-9bfe0aae66db)
