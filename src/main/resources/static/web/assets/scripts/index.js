@@ -6,11 +6,11 @@ createApp( {
             nombre: "",
             nickTitulo: "",
             nick: "",
-            emailONick: "",
+            emailONick: "test@test.com",
             apellido: "",
             email: "",
             contraseñaRegistro: "",
-            contraseña: "",
+            contraseña: "1234",
             direccion: "",
             codigoPostal: "",
             ciudad: "",
@@ -38,7 +38,7 @@ createApp( {
             this.error = ""
         },
         registro(){
-            axios.post('/api/usuario/registro',
+            axios.post('https://localhost:8080/api/usuario/registro',
                         {
                             nombre: this.nombre + " " + this.apellido,
                             email: this.email,
@@ -59,7 +59,7 @@ createApp( {
                 
                 this.password = this.contraseñaRegistro
                 setTimeout(()=>{
-                    axios.post('/api/login',`email=${this.nick}&password=${this.password}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                    axios.post('https://localhost:8080/api/login',`email=${this.nick}&password=${this.password}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                     .then(res => { 
                         sessionStorage.setItem('logIn', true)
                         this.loginAux = true
@@ -76,7 +76,7 @@ createApp( {
             // {this.error = error.response.data}
         },
         logIn(){
-            axios.post('/api/login',`email=${this.emailONick}&password=${this.contraseña}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+            axios.post('https://localhost:8080/api/login',`email=${this.emailONick}&password=${this.contraseña}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
             .then(res => {
                 this.loginAux = true
                 document.getElementById('inicioSesion').classList.toggle('ocultar-modal')
@@ -107,7 +107,7 @@ createApp( {
         logOut(){
             sessionStorage.setItem('logIn', 'false')
             this.loginAux = false
-            axios.post('/api/logout')
+            axios.post('https://localhost:8080/api/logout')
         }
     }
 }).mount("#app")
