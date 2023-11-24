@@ -27,8 +27,6 @@ dependencies {
 	implementation'org.springframework.boot:spring-boot-starter-mail'
 	implementation'javax.persistence:javax.persistence-api'
 	implementation 'com.github.librepdf:openpdf:1.3.30'
-	implementation 'org.postgresql:postgresql'
-	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.3'
 }
 
 tasks.named('test') {
