@@ -71,13 +71,13 @@ createApp({
             console.table([this.images[this.currentIndex],this.productoSeleccionado,this.colorSeleccionado,this.medida]);
         },
         cargarDatos(){
-            axios.get("https://arthub-an6d.onrender.com/api/productos")
+            axios.get("/api/productos")
             .then(res=>{
                 this.listaProductosGenericos=res.data;
             })
             const parameterSearch= new URLSearchParams(location.search);
             const id=parameterSearch.get("id");
-            axios.get(`https://arthub-an6d.onrender.com/api/ilustracion/${id}`)
+            axios.get(`/api/ilustracion/${id}`)
             .then(res=>{
                 this.listaIlustraciones=res.data;
                 this.images=this.listaIlustraciones.map(ilustracion=> ilustracion.imgURL)
@@ -134,7 +134,7 @@ createApp({
         logOut(){
             sessionStorage.setItem('logIn', false)
             this.loginAux = false
-            axios.post('https://arthub-an6d.onrender.com/api/logout')
+            axios.post('/api/logout')
         },
     },
     computed: {

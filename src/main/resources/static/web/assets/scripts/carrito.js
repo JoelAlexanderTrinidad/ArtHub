@@ -42,11 +42,11 @@ createApp( {
             return numberFormat.format(amount);
         },
         cargarDatos(){
-            axios.get("https://arthub-an6d.onrender.com/api/productos")
+            axios.get("/api/productos")
             .then(res=>{
                 this.listaProductosGenericos=res.data;
             })
-            axios.get(`https://arthub-an6d.onrender.com/api/ilustraciones`)
+            axios.get(`/api/ilustraciones`)
             .then(res=>{
                 this.listaIlustraciones=res.data;
             })
@@ -116,7 +116,7 @@ createApp( {
             this.cargarDatos()
         },
         informacion(){
-            axios.get(`https://arthub-an6d.onrender.com/api/usuario/actual`)
+            axios.get(`/api/usuario/actual`)
                 .then(res=> {
                     console.log(res)
                     this.nombre = res.data.nombre
@@ -146,7 +146,7 @@ createApp( {
                         this.pagoExitoso = false
                     }, 3000)
                     console.log(response)
-                    axios.post(`https://arthub-an6d.onrender.com/api/email/pdf`,this.listaCarrito)
+                    axios.post(`/api/email/pdf`,this.listaCarrito)
                     .then(res=>{
                         console.log("Correcto")
                     })
@@ -164,7 +164,7 @@ createApp( {
             }
         },
         actualizar(){
-            axios.patch(`https://arthub-an6d.onrender.com/api/usuario/modificar`,`nombre=${this.nombre}&apellido=${this.apellido}&nick=${this.nick}&direccion=${this.direccion}
+            axios.patch(`/api/usuario/modificar`,`nombre=${this.nombre}&apellido=${this.apellido}&nick=${this.nick}&direccion=${this.direccion}
             &codigoPostal=${this.codigoPostal}&ciudad=${this.ciudad}&pais=${this.pais}&descripcionExtra=${this.descripcionExtra}`,
                 {headers:{'content-type':'application/x-www-form-urlencoded'}})
                 .then(res=> {
@@ -183,7 +183,7 @@ createApp( {
         logOut(){
             sessionStorage.setItem('logIn', false)
             this.loginAux = false
-            axios.post('https://arthub-an6d.onrender.com/api/logout')
+            axios.post('/api/logout')
         },
         mostrarDatos(idMostrar, idOcultar, idTextoActivo,idTextoDesactivado){
             document.getElementById(idMostrar).classList.remove('ocultar-capa')

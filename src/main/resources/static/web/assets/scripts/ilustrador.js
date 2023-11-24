@@ -39,7 +39,7 @@ createApp( {
     },
     methods: {
         informacion(){
-            axios.get(`https://arthub-an6d.onrender.com/api/ilustradores/${this.nickBusquedaIlustrados}`)
+            axios.get(`/api/ilustradores/${this.nickBusquedaIlustrados}`)
                 .then(res=> {
                     this.nickTitulo = res.data.nick
                     this.imagenIlustrador = res.data.avatarURL
@@ -58,7 +58,7 @@ createApp( {
             document.getElementById('registro').classList.toggle('ocultar-modal')
         },
         registro(){
-            axios.post('https://arthub-an6d.onrender.com/api/usuario/registro',
+            axios.post('/api/usuario/registro',
                 {
                     nombre: this.nombre + "-" + this.apellido,
                     email: this.email,
@@ -79,7 +79,7 @@ createApp( {
                 
                 this.password = this.contraseñaRegistro
                 setTimeout(()=>{
-                    axios.post('https://arthub-an6d.onrender.com/api/login',`email=${this.nick}&password=${this.password}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                    axios.post('/api/login',`email=${this.nick}&password=${this.password}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                     .then(res => { 
                         this.loginAux = true
                         mensaje.innerHTML = `${mensajeTexto} <p class="mt-2">Iniciaste sesion...</p>`
@@ -94,7 +94,7 @@ createApp( {
             .catch(error => {this.error = error.response.data})
         },
         logIn(){
-            axios.post('https://arthub-an6d.onrender.com/api/login',`email=${this.emailONick}&password=${this.contraseña}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+            axios.post('/api/login',`email=${this.emailONick}&password=${this.contraseña}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
             .then(res => {
                 this.loginAux = true
                 document.getElementById('inicioSesion').classList.toggle('ocultar-modal')
@@ -128,7 +128,7 @@ createApp( {
         logOut(){
             sessionStorage.setItem('logIn', false)
             this.loginAux = false
-            axios.post('https://arthub-an6d.onrender.com/api/logout')
+            axios.post('/api/logout')
         },
     }
 }).mount("#app")

@@ -39,7 +39,7 @@ createApp( {
     },
     methods: {
         informacion(){
-            axios.get(`https://arthub-an6d.onrender.com/api/productos`)
+            axios.get(`/api/productos`)
                 .then(res=> {
                     console.log(res.data)
                     this.productos = res.data
@@ -54,7 +54,7 @@ createApp( {
                     this.llaveros = res.data.filter(producto => producto.nombre.split(",")[0].includes('LLAVERO'))[0]
                 })
                 .catch(error => console.log(error))
-                axios.get(`https://arthub-an6d.onrender.com/api/ilustradores`)
+                axios.get(`/api/ilustradores`)
                 .then(res=> {
                     this.ilustradores = res.data
                 })
@@ -116,7 +116,7 @@ createApp( {
             document.getElementById(idBotonDesactivado).classList.add('boton-desactivado')
         },
         actualizar(){
-            axios.patch(`https://arthub-an6d.onrender.com/api/usuario/modificar`,`nombre=${this.nombre}&apellido=${this.apellido}&nick=${this.nick}&direccion=${this.direccion}
+            axios.patch(`/api/usuario/modificar`,`nombre=${this.nombre}&apellido=${this.apellido}&nick=${this.nick}&direccion=${this.direccion}
             &codigoPostal=${this.codigoPostal}&ciudad=${this.ciudad}&pais=${this.pais}&descripcionExtra=${this.descripcionExtra}`,
                 {headers:{'content-type':'application/x-www-form-urlencoded'}})
                 .then(res=> {
