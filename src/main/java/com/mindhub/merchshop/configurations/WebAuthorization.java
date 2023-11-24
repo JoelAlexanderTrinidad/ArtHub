@@ -34,11 +34,12 @@ class WebAuthorization{
                 .antMatchers(HttpMethod.POST,"/api/email/pdf").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.GET,"/web/cuenta.html").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.GET,"/web/carrito.html").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,"/web/editor-producto.html").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.GET,"/web/index.html").permitAll()
                 .antMatchers(HttpMethod.GET,"/web/contacto.html").permitAll()
                 .antMatchers(HttpMethod.GET,"/web/ilustrador.html").permitAll()
-                .antMatchers(HttpMethod.GET,"/web/productos.html").permitAll()
-                .antMatchers(HttpMethod.GET,"/web/editor-producto.html").permitAll();
+                .antMatchers(HttpMethod.GET,"/web/productos.html").permitAll();
+
 
 
         http.formLogin()
