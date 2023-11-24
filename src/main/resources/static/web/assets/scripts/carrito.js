@@ -134,7 +134,7 @@ createApp( {
                 .catch(error => console.log(error))
         },
         pagar(){
-            axios.post('https://arthub-an6d.onrender.com/api/cards/transaction',{
+            axios.post('/api/cards/transaction',{
                 number : this.numeroTarjeta,
                 cvv: this.cvvTarjeta,
                 description : "Items bought on Arthub",

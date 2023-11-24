@@ -176,7 +176,7 @@ public class MerchshopApplication {
 			us1.setAvatarUrl("https://firebasestorage.googleapis.com/v0/b/arthub-102d1.appspot.com/o/prison-mike.webp?alt=media&token=ccb59e27-26ad-4c03-89d5-34b9f70a9d11");
 
 			// https://i.postimg.cc/rFWNbhWZ/unnamed.png
-			Usuario us2= new Usuario("test@test.com","test","test",passwordEncoder.encode("1234"),dir1);
+			Usuario us2= new Usuario("test@test.com","Test","Test",passwordEncoder.encode("1234"),dir1);
 			us2.setAvatarUrl("https://i.postimg.cc/rFWNbhWZ/unnamed.png");
 
 			direccionRepository.save(dir1);
