@@ -76,7 +76,7 @@ createApp( {
             // {this.error = error.response.data}
         },
         logIn(){
-            axios.post('/api/login',`email=${this.emailONick}&password=${this.contraseña}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+            axios.post('https://arthub-an6d.onrender.com/api/login',`email=${this.emailONick}&password=${this.contraseña}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
             .then(res => {
                 this.loginAux = true
                 document.getElementById('inicioSesion').classList.toggle('ocultar-modal')
@@ -107,7 +107,7 @@ createApp( {
         logOut(){
             sessionStorage.setItem('logIn', 'false')
             this.loginAux = false
-            axios.post('/api/logout')
+            axios.post('https://arthub-an6d.onrender.com/api/logout')
         }
     }
 }).mount("#app")

@@ -49,7 +49,7 @@ createApp( {
             this.error = ""
         },
         registro(){
-            axios.post('/api/usuario/registro',
+            axios.post('https://arthub-an6d.onrender.com/api/usuario/registro',
                         {
                             nombre: this.nombre + "-" + this.apellido,
                             email: this.email,
@@ -70,7 +70,7 @@ createApp( {
                 
                 this.password = this.contraseñaRegistro
                 setTimeout(()=>{
-                    axios.post('/api/login',`email=${this.nick}&password=${this.password}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                    axios.post('https://arthub-an6d.onrender.com/api/login',`email=${this.nick}&password=${this.password}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                     .then(res => { 
                         sessionStorage.setItem('logIn', true)
                         this.loginAux = true
@@ -86,7 +86,7 @@ createApp( {
             .catch(error => {this.error = error.response.data})
         },
         logIn(){
-            axios.post('/api/login',`email=${this.emailONick}&password=${this.contraseña}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+            axios.post('https://arthub-an6d.onrender.com/api/login',`email=${this.emailONick}&password=${this.contraseña}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
             .then(res => {
                 this.loginAux = true
                 document.getElementById('inicioSesion').classList.toggle('ocultar-modal')
@@ -113,10 +113,10 @@ createApp( {
         logOut(){
             sessionStorage.setItem('logIn', false)
             this.loginAux = false
-            axios.post('/api/logout')
+            axios.post('https://arthub-an6d.onrender.com/api/logout')
         },
         informacion(){
-            axios.get(`/api/ilustradores`)
+            axios.get(`https://arthub-an6d.onrender.com/api/ilustradores`)
             .then(res=>{
                 this.ilustradores = res.data
                 this.ilustradoresFiltrados = [...this.ilustradores]
@@ -125,7 +125,7 @@ createApp( {
             
         },
         productosIlustAleatorios(){
-            axios.get(`/api/ilustraciones`)
+            axios.get(`https://arthub-an6d.onrender.com/api/ilustraciones`)
             .then(res=>{
 
                 console.log(res.data)
@@ -140,7 +140,7 @@ createApp( {
                 // console.log(this.ilustracionesAleatorias)
             })
 
-            axios.get(`/api/productos`)
+            axios.get(`https://arthub-an6d.onrender.com/api/productos`)
             .then(res=>{
                 const productos = res.data.map(producto => producto.nombre)
                 const productosMezclados = productos.sort(() => Math.random() - 0.5)
